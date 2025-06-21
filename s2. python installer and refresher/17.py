@@ -6,23 +6,18 @@
 
 - 1 week is = to 7 days."""
 
-from datetime import date
+# filename: birthday_weeks.py
+from datetime import date            # 1. import the blueprint
 
-# 1. Build a 'today' object from the date class
-today = date.today()
-print(f"Today is {today}")                # --> 2025-06-21 (for example)
+today = date.today()                 # 2. build today's object
+print(f"Today: {today} (ISO week {today.isocalendar().week})")
 
-# 2. Ask that object to do something: report its ISO week number
-today_week = today.isocalendar().week
-print(f"Today sits in week {today_week}\n")
+# 3. user input → yyyy-mm-dd
+year, month, day = map(int, input("YYYY-MM-DD: ").split("-"))
+birthday = date(year, month, day)    # 4. build another object
 
-# 3. Get a birthday from the user
-birthday_input = input("Enter your birthday (dd-mm-yyyy): ")
-day, month, year = map(int, birthday_input.split("-"))
+print(f"Your birthday sits in ISO week {birthday.isocalendar().week}")
 
-# 4. Use the recipe again to bake a second object, this time your birthday
-birthday_date = date(year, month, day)
-
-# 5. Ask *that* object the same question
-birthday_week = birthday_date.isocalendar().week
-print(f"Your birthday falls in week {birthday_week}")
+# optional: how many full weeks away
+weeks_left = (birthday - today).days // 7
+print(f"≈ {weeks_left} week(s) until then")
