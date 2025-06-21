@@ -6,3 +6,9 @@
 
 - Using the print()  Print how much money you have left, after purchasing the item."""
 
+x = 50
+item = 15
+tax = 0.03
+
+money_left = x - (item * (1+tax))
+print(money_left)
