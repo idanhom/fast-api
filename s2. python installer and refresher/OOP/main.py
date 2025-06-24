@@ -1,5 +1,10 @@
 from enemy import Enemy
 
-enemy = Enemy()
+zombie = Enemy()
+zombie.type_of_enemy = "Zombie"
 
-print(f"{enemy.type_of_enemy} has {enemy.health_points}" )
+print(zombie.talk())
+print(zombie.walk_forward())
+print(zombie.attack())
+
+print(zombie.summary())
