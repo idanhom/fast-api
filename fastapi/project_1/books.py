@@ -11,6 +11,7 @@ BOOKS = [
     {"title": "Title Six", "author": "Author Two", "category": "Math"},
 ]
 
+<<<<<<< HEAD
 # @app.get("/books")
 # async def read_all_books():
 #     return BOOKS
@@ -46,3 +47,5 @@ async def read_category_by_query(book_author: str, category: str):
         ):
             books_to_return.append(book)
     return books_to_return
+=======
+>>>>>>> 22d750f (push)
