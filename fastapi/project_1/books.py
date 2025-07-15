@@ -61,14 +61,16 @@ async def unique_categories():
 
 # **Endpoint Design**: Use a query parameter like `?search=some_word`.
 # **Goal**: Find and return the **first book** where the title contains the keyword.
+@app.get("/books/search/")
+async def return_first(search: str):
+    for book in BOOKS:
+        if search.casefold() in book["title"].casefold():
+            return book
 
 
 
 
-
-
-
-
+//////
 
 
 
