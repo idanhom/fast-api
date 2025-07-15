@@ -12,6 +12,13 @@ BOOKS = [
 ]
 
 
-@app.get("/books/{book_title}")
-async def read_book(category: str):
+
+@app.get("/books/")
+async def get_books_by_category(category: str):
     return [book for book in BOOKS if book["category"].casefold() == category.casefold()]
+
+@app.get("/books/{book_author}")
+async def read_books_author_category(author: str, category: str):
+    return [book for book in BOOKS 
+            if book["author"].casefold() == author.casefold()
+            and book["category"].casefold() == category.casefold()]
