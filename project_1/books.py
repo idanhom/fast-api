@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 app = FastAPI()
 
@@ -30,12 +30,26 @@ async def get_books_by_author_category(author: str, category: str):
 # **Endpoint Design**: Use a simple path (e.g., `/categories`).
 # **Goal**: Extract and return a list of all unique book categories.
 
+@app.get("/categories")
+async def get_unique_categories():
+    return sorted({book["category"] for book in BOOKS})
+
+
+
 # ---
 
 # ### 3. **Return the First Book Matching a Partial Title Match**
 
 # **Endpoint Design**: Use a query parameter like `?search=some_word`.
 # **Goal**: Find and return the **first book** where the title contains the keyword.
+
+@app.get("/books/search/")
+async def find_first_title(search: str):
+    for book in BOOKS:
+        if search.casefold() in book["title"].casefold():
+            return book
+    raise HTTPException(status_code=404, detail="book not found")
+
 
 # ---
 
@@ -44,12 +58,27 @@ async def get_books_by_author_category(author: str, category: str):
 # **Endpoint Design**: Use a query parameter for the title.
 # **Goal**: Return `{"exists": True}` or `{"exists": False}` depending on whether a book with the given title exists.
 
+@app.get("/books/search/")
+async def is_title_existing(search: str):
+    for book in BOOKS:
+        if search.casefold() == book["title"].casefold():
+            return {"exists": True}
+        else:
+            return {"exists": False}
+
+
+
 # ---
 
 # ### 5. **Return All Books Sorted Alphabetically by Title**
 
 # **Endpoint Design**: Simple path endpoint (e.g., `/books/sorted`).
 # **Goal**: Return all books sorted by their title in ascending order.
+@app.get("/books/sorted/")
+async def book_sorted():
+    return sorted([book["title"] for book in BOOKS], reverse=True)
+
+
 
 # ---
 
