@@ -70,13 +70,6 @@ async def return_first(search: str):
 
 
 
-//////
-
-
-
-
-
-
 
 
 # ---
@@ -85,6 +78,29 @@ async def return_first(search: str):
 
 # **Endpoint Design**: Use a query parameter for the title.
 # **Goal**: Return `{"exists": True}` or `{"exists": False}` depending on whether a book with the given title exists.
+@app.get("/books/exists/")
+async def is_existing(title: str):
+    for book in BOOKS:
+        if book["title"].casefold() == title.casefold():
+            return {"exists": True}
+    return {"exists": False}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # ---
 
@@ -92,6 +108,13 @@ async def return_first(search: str):
 
 # **Endpoint Design**: Simple path endpoint (e.g., `/books/sorted`).
 # **Goal**: Return all books sorted by their title in ascending order.
+@app.get("/books/sorted/")
+async def get_sorted():
+    return sorted({book["title"] for book in BOOKS}, reverse=True)
+
+
+
+
 
 # ---
 
