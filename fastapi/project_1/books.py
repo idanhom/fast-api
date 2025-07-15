@@ -22,3 +22,4 @@ async def read_books_author_category(author: str, category: str):
     return [book for book in BOOKS 
             if book["author"].casefold() == author.casefold()
             and book["category"].casefold() == category.casefold()]
+
