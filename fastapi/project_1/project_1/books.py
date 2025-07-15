@@ -15,13 +15,44 @@ BOOKS = [
 
 # **Endpoint Design**: Combine path and query parameters.
 # **Goal**: Fetch books where both the author and category match.
+
 @app.get("/books/{author}")
-async def read_book_by_author_category(author: str, category: str):
+async def get_books_by_author_category(author: str, category: str):
     return [
         book for book in BOOKS if
-            book["author"].casefold() == author.casefold() 
-            and book["category"].casefold() == category.casefold()
-            ]
+        book["author"].casefold() == author.casefold()
+        and book["category"].casefold() == category.casefold()
+    ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @app.get("/books/{author}")
+# async def read_book_by_author_category(author: str, category: str):
+#     return [
+#         book for book in BOOKS if
+#             book["author"].casefold() == author.casefold() 
+#             and book["category"].casefold() == category.casefold()
+#             ]
 
 # ---
 
