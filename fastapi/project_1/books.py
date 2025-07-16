@@ -9,20 +9,30 @@ BOOKS = [
     {"title": "Title Four", "author": "Author Four", "category": "Math"},
     {"title": "Title Five", "author": "Author Five", "category": "Math"},
     {"title": "Title Six", "author": "Author Two", "category": "Math"},
+    {"title": "Title Seven", "author": "Author Two", "category": "Science"},
 ]
 
 # ### 1. **Return All Books in a Specific Category and by a Specific Author**
 
 # **Endpoint Design**: Combine path and query parameters.
 # **Goal**: Fetch books where both the author and category match.
+# @app.get("/books/{author}")
+# async def get_book_by_author_category(author: str, category: str):
+#     return [
+#         book for book in BOOKS if
+#         book["author"].casefold() == author.casefold()
+#         and book["category"].casefold() == category.casefold()
+#     ]
 
-@app.get("/books/{author}")
-async def get_book_author_category(author: str, category: str):
-    return [
-        book for book in BOOKS if
-            book["author"].casefold() == author.casefold()
-            and book["category"].casefold() == category.casefold()
-    ]
+
+
+
+
+
+
+
+
+
 
 # ---
 
@@ -31,11 +41,11 @@ async def get_book_author_category(author: str, category: str):
 # **Endpoint Design**: Use a simple path (e.g., `/categories`).
 # **Goal**: Extract and return a list of all unique book categories.
 
-@app.get("/categories/")
-async def unique_categories():
-    return {book["category"] for book in BOOKS}
-
-
+# @app.get("/books/categories/")
+# async def unique_categories():
+#     return {
+#         book["category"] for book in BOOKS
+#     }
 
 
 
@@ -62,10 +72,23 @@ async def unique_categories():
 # **Endpoint Design**: Use a query parameter like `?search=some_word`.
 # **Goal**: Find and return the **first book** where the title contains the keyword.
 @app.get("/books/search/")
-async def return_first(search: str):
+async def partial_match(keyword: str):
     for book in BOOKS:
-        if search.casefold() in book["title"].casefold():
+        if keyword.casefold() in book["title"].casefold():
             return book
+
+
+
+
+
+
+
+
+# @app.get("/books/search/")
+# async def return_first(search: str):
+#     for book in BOOKS:
+#         if search.casefold() in book["title"].casefold():
+#             return book
 
 
 
@@ -78,12 +101,27 @@ async def return_first(search: str):
 
 # **Endpoint Design**: Use a query parameter for the title.
 # **Goal**: Return `{"exists": True}` or `{"exists": False}` depending on whether a book with the given title exists.
-@app.get("/books/exists/")
-async def is_existing(title: str):
-    for book in BOOKS:
-        if book["title"].casefold() == title.casefold():
-            return {"exists": True}
-    return {"exists": False}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @app.get("/books/exists/")
+# async def is_existing(title: str):
+#     for book in BOOKS:
+#         if book["title"].casefold() == title.casefold():
+#             return {"exists": True}
+#     return {"exists": False}
 
 
 
@@ -108,9 +146,24 @@ async def is_existing(title: str):
 
 # **Endpoint Design**: Simple path endpoint (e.g., `/books/sorted`).
 # **Goal**: Return all books sorted by their title in ascending order.
-@app.get("/books/sorted/")
-async def get_sorted():
-    return sorted({book["title"] for book in BOOKS}, reverse=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @app.get("/books/sorted/")
+# async def get_sorted():
+#     return sorted({book["title"] for book in BOOKS}, reverse=True)
 
 
 
