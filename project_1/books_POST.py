@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -18,7 +19,6 @@ BOOKS = [
 
 
 
-from pydantic import BaseModel
 
 class Book(BaseModel):
     title: str
