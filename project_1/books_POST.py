@@ -27,7 +27,7 @@ class Book(BaseModel):
 
 @app.post("/books/create")
 async def create_book(new_book: Book):
-    BOOKS.append(new_book.dict())
+    BOOKS.append(new_book.model_dump())
     return new_book
 
 
