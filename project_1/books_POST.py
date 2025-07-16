@@ -11,6 +11,13 @@ BOOKS = [
     {"title": "Title Six", "author": "Author Two", "category": "Math"},
 ]
 
+
+
+
+
+
+
+
 from pydantic import BaseModel
 
 class Book(BaseModel):
@@ -22,3 +29,24 @@ class Book(BaseModel):
 async def create_book(new_book: Book):
     BOOKS.append(new_book.dict())
     return new_book
+
+
+
+
+
+
+
+
+
+
+# from pydantic import BaseModel
+
+# class Book(BaseModel):
+#     title: str
+#     author: str
+#     category: str
+
+# @app.post("/books/create")
+# async def create_book(new_book: Book):
+#     BOOKS.append(new_book.dict())
+#     return new_book
