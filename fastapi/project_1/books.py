@@ -71,11 +71,27 @@ BOOKS = [
 
 # **Endpoint Design**: Use a query parameter like `?search=some_word`.
 # **Goal**: Find and return the **first book** where the title contains the keyword.
-@app.get("/books/search/")
-async def partial_match(keyword: str):
-    for book in BOOKS:
-        if keyword.casefold() in book["title"].casefold():
-            return book
+# @app.get("/books/search/")
+# async def search(keyword: str):
+#     for book in BOOKS:
+#         if keyword.casefold() in book["title"].casefold():
+#             return book
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
