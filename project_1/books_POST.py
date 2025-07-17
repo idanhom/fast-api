@@ -1,6 +1,9 @@
 from fastapi import FastAPI, status, HTTPException
 from pydantic import BaseModel
 
+from pathlib import Path
+import json
+
 app = FastAPI()
 
 BOOKS = [
@@ -12,22 +15,13 @@ BOOKS = [
     {"title": "Title Six", "author": "Author Two", "category": "Math"},
 ]
 
-class Book(BaseModel):
-    title: str
-    author: str
-    category: str
+DATA_FILE = Path("books.json")
 
-@app.post("/books", status_code=status.HTTP_201_CREATED)
-async def create_book(book: Book):
-    BOOKS.append(book.model_dump())
-    return book
-
-
-
-
-@app.get("/view", status_code=status.HTTP_200_OK)
-async def view_books():
-    return BOOKS
+def load_books() -> list[dict]:
+    """
+    Read books.json once when the app starts
+    
+    """
 
 
 
@@ -35,28 +29,3 @@ async def view_books():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# from pydantic import BaseModel
-
-# class Book(BaseModel):
-#     title: str
-#     author: str
-#     category: str
-
-# @app.post("/books/create")
-# async def create_book(new_book: Book):
-#     BOOKS.append(new_book.dict())
-#     return new_book
