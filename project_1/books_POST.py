@@ -20,8 +20,16 @@ DATA_FILE = Path("books.json")
 def load_books() -> list[dict]:
     """
     Read books.json once when the app starts
-    
+    If the file is mssing or corrupt, fall back to an empty list
     """
+    if not DATA_FILE.exists():
+        return []
+    try:
+        return json.loads(DATA_FILE.read_text())
+    except json.JSONDecodeError:
+        return []
+    
+BOOKS: list[dict] = load_books()
 
 
 
