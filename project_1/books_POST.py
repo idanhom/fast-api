@@ -20,9 +20,13 @@ class Book(BaseModel):
 @app.post("/books", status_code=status.HTTP_201_CREATED)
 async def create_book(book: Book):
     BOOKS.append(book.model_dump())
-    
 
 
+
+
+@app.get("/view", status_code=status.HTTP_200_OK)
+async def view_books():
+    return BOOKS
 
 
 
