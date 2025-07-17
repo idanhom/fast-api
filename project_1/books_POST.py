@@ -20,6 +20,7 @@ class Book(BaseModel):
 @app.post("/books", status_code=status.HTTP_201_CREATED)
 async def create_book(book: Book):
     BOOKS.append(book.model_dump())
+    return book
 
 
 
