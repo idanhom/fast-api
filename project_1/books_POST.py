@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, status, HTTPException
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -12,23 +12,28 @@ BOOKS = [
     {"title": "Title Six", "author": "Author Two", "category": "Math"},
 ]
 
-
-
-
-
-
-
-
-
 class Book(BaseModel):
     title: str
     author: str
     category: str
 
-@app.post("/books/create")
-async def create_book(new_book: Book):
-    BOOKS.append(new_book.model_dump())
-    return new_book
+@app.post("/books", status_code=status.HTTP_201_CREATED)
+async def create_book(book: Book):
+    BOOKS.append(book.model_dump())
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
