@@ -5,21 +5,23 @@ from pydantic import BaseModel, Field
 app = FastAPI()
 
 # ---------- Models ----------
-class BookRequest(BaseModel):                 # data sent by the client
+# Define incoming request structure
+class BookRequest(BaseModel):
     id: Optional[int] = None
     title: str = Field(min_length=3)
     author: str = Field(min_length=1)
     description: str = Field(min_length=1, max_length=100)
     rating: int = Field(ge=1, le=5)
 
-class Book(BaseModel):                        # data stored by the server
+# Define full book structure (includes ID)
+class Book(BaseModel):
     id: int
     title: str
     author: str
     description: str
     rating: int
 
-# ---------- In-memory storage ----------
+# Fake stored book list (pretend these are from previous POSTs)
 books = [
     Book(id=1, title="Computer Science Pro", author="Coding with Ruby",
          description="A very nice book", rating=5),
