@@ -35,6 +35,14 @@ books = [
 async def create_book(book_request: BookRequest):
     book_data = book_request.model_dump(exclude_none=True)
 
+
+    book_data = assign_id(book_data)
+
+
+
+
+
+
     # use the function assign_id here somehow? input the book with added id
     # somehow as argument
 
@@ -49,9 +57,9 @@ async def create_book(book_request: BookRequest):
     return new_book
 
 
-def assign_id(book: Book):
+def assign_id(book_data: dict) -> dict:
     if books:
-        book.id = books[-1].id + 1
+        book_data["id"] = books[-1].id + 1
     else:
-        book.id = 1
-    return book
+        book_data["id"] = 1
+    return book_data
