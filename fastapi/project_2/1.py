@@ -29,22 +29,25 @@ books = [
          description="A great book", rating=5),
 ]
 
+def assign_id(book_data: dict) -> dict:
+    book_data["id"] = books[-1].id +1 if books else 1
+    return book_data
+
+
+
+    # if books:
+    #     book_data["id"] = books[-1].id + 1
+    # else:
+    #     book_data["id"] = 1
+    # return book_data
+
 
 # ---------- Route ----------
 @app.post("/create-book", response_model=Book, status_code=201)
 async def create_book(book_request: BookRequest):
     book_data = book_request.model_dump(exclude_none=True)
 
-
     book_data = assign_id(book_data)
-
-
-
-
-
-
-    # use the function assign_id here somehow? input the book with added id
-    # somehow as argument
 
     # # Assign id ourselves
     # if books:
@@ -56,10 +59,3 @@ async def create_book(book_request: BookRequest):
     books.append(new_book)
     return new_book
 
-
-def assign_id(book_data: dict) -> dict:
-    if books:
-        book_data["id"] = books[-1].id + 1
-    else:
-        book_data["id"] = 1
-    return book_data
