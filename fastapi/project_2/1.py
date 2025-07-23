@@ -1,3 +1,6 @@
+# https://redeploy.udemy.com/course/fastapi-the-complete-course/learn/lecture/29025634#overview
+
+
 from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
