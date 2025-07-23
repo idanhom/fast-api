@@ -27,18 +27,18 @@ books = [
          description="A great book", rating=5),
 ]
 
-# ---------- Helper ----------
-def find_book_id(book: Book) -> None:
-    if book.id is None:
-        if books:                          # list is not empty
-            last_id = books[-1].id         # ID of the most recent book
-            book.id = last_id + 1
-        else:                              # list is empty
-            book.id = 1
 
 # ---------- Route ----------
-@app.post("/create-book")
+@app.post("/create-book", response_model=Book, status_code=201)
 async def create_book(book_request: BookRequest):
-    new_book = Book(**book_request.model_dump())  # convert validated input → Book
-    find_book_id(new_book)                        # assign missing id
-    books.append(new_book)                        # store in list
+    book_data = book_request.model_dump(exclude_none=True)
+
+    # Assign id ourselves
+    if books:
+        book_data["id"] = books[-1].id + 1
+    else:
+        book_data["id"] = 1
+
+    new_book = Book(**book_data)
+    books.append(new_book)
+    return new_book
