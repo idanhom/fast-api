@@ -46,8 +46,29 @@ books = [
 ]
 
 def assign_id(book_data: dict) -> dict:
-    book_data["id"] = books[-1].id +1 if books else 1
-    return book_data
+    # this takes the book from BookRequest
+    # if it has no "id" it adds one
+    # using the latest entry of book + 1
+    # book.id[-1] + 1
+
+    # else, it adds book.id = 1
+
+    if books:
+        book_data["id"] 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -55,6 +76,29 @@ def assign_id(book_data: dict) -> dict:
     #     book_data["id"] = books[-1].id + 1
     # else:
     #     book_data["id"] = 1
+    # return book_data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # book_data["id"] = books[-1].id +1 if books else 1
     # return book_data
 
 
