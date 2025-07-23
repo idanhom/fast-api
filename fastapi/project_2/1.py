@@ -29,9 +29,12 @@ books = [
 
 # ---------- Helper ----------
 def find_book_id(book: Book) -> None:
-    last_book = books[-1] if books else None
-    
-    book.id = last_book.id + 1 if last_book and last_book.id is not None else 1
+    if book.id is None:
+        if books:                          # list is not empty
+            last_id = books[-1].id         # ID of the most recent book
+            book.id = last_id + 1
+        else:                              # list is empty
+            book.id = 1
 
 # ---------- Route ----------
 @app.post("/create-book")
