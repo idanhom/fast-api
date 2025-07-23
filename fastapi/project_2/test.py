@@ -1,3 +1,8 @@
+# https://chatgpt.com/g/g-68224f68f00481919450c37b53dfa936-python-teacher?model=gpt-4o
+
+
+
+
 from pydantic import BaseModel, Field
 from typing import Optional
 
