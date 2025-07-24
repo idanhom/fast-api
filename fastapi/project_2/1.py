@@ -53,6 +53,7 @@ def assign_id(book_data: dict) -> dict:
     # return book_data
 
     book_data["id"] = books[-1].id + 1 if books else 1
+    return book_data
 
 
 
