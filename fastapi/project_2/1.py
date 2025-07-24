@@ -58,6 +58,16 @@ def assign_id(book_data: dict) -> dict:
 
 
 
+@app.get("/books")
+async def read_all_books():
+    return books
+
+@app.get("/books/{book_id}")
+async def read_book(book_id: int):
+    for book in books:
+        if book.id == book_id:
+            return book
+        
 
 
 
