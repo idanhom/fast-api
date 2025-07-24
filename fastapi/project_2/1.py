@@ -69,8 +69,13 @@ async def read_book(book_id: int):
             return book
         
 
-
-
+@app.get("/book/")
+async def read_book_by_rating(book_rating: int):
+    books_to_return = []
+    for book in books:
+        if book.rating == book_rating:
+            books_to_return.append(book)
+    return books_to_return
 
 
 # ---------- Route ----------
