@@ -2,7 +2,7 @@
 
 
 from typing import Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -10,7 +10,6 @@ app = FastAPI()
 # ---------- Models ----------
 # Define incoming request structure
 class BookRequest(BaseModel):
-    id: Optional[int] = Field(description='ID is not needed on create', default=None)
     title: str = Field(min_length=3)
     author: str = Field(min_length=1)
     description: str = Field(min_length=1, max_length=100)
@@ -76,7 +75,14 @@ async def read_book_by_rating(book_rating: int):
         book.rating == book_rating
     ]
 
-
+@app.put("/books/{book_id}", response_model=Book)
+async def update_book(book_id: int, payload: BookRequest):
+    for idx, stored in enumerate(books):
+        if stored.id == book_id:
+            updated = Book(id=book_id, **payload.model_dump())
+            books[idx] = updated
+            return updated
+    raise HTTPException(status_code=404, detail="Book not found")
 
 
 
