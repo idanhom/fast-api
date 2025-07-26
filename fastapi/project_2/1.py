@@ -77,17 +77,29 @@ async def read_all_books():
 
 @app.get("/book/")
 async def read_book_by_rating(book_rating: int = Query(gt=0, lt=6)):
-    return [
+    matching_books= [
         book for book in books if
         book.rating == book_rating
     ]
 
+    if not matching_books:
+        raise HTTPException(status_code=404, detail="books not found")
+
+    return matching_books
+
+
 @app.get("/books/publish")
 async def get_books_filter_by_date(date: int = Query(gt=1999, lt=2031)):
-    return [
+    matching_books = [
         book for book in books if
         book.published_date == date
     ]
+
+    if not matching_books:
+        raise HTTPException(status_code=404, detail="books not found")
+    
+    return matching_books
+
 
 @app.post("/create-book", response_model=Book, status_code=201)
 async def create_book(book_request: BookRequest):
@@ -103,10 +115,14 @@ async def create_book(book_request: BookRequest):
 
 @app.get("/books/{book_id}")
 async def read_book(book_id: int):
-    for book in books:
-        if book.id == book_id:
-            return book
-        
+    matching_books = [
+        book for book in books if book.id == book_id
+    ]
+
+    if not matching_books:
+        raise HTTPException(status_code=404, detail="books not found")
+
+    return matching_books
 
 
 @app.put("/books/{book_id}", response_model=Book)
@@ -117,9 +133,6 @@ async def update_book(book_id: int, payload: BookRequest):
             books[idx] = updated
             return updated
     raise HTTPException(status_code=404, detail="Book not found")
-
-
-# data validation
 
 
 @app.delete("/books/{book_id}")
