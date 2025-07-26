@@ -94,3 +94,11 @@ async def create_book(book_request: BookRequest):
     new_book = Book(**book_data)
     books.append(new_book)
     return new_book
+
+@app.delete("/books/{book_id}")
+async def remove_book(book_id):
+    for idx, content in enumerate(books):
+        if content.id == book_id:
+            books.pop(idx)
+            return
+
