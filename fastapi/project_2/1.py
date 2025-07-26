@@ -1,7 +1,7 @@
 # https://redeploy.udemy.com/course/fastapi-the-complete-course/learn/lecture/29025634#overview
 
 
-from fastapi import FastAPI, HTTPException, Path
+from fastapi import FastAPI, HTTPException, Path, Query
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -76,14 +76,14 @@ async def read_all_books():
 
 
 @app.get("/book/")
-async def read_book_by_rating(book_rating: int):
+async def read_book_by_rating(book_rating: int = Query(gt=0, lt=6)):
     return [
         book for book in books if
         book.rating == book_rating
     ]
 
 @app.get("/books/publish")
-async def get_books_filter_by_date(date: int):
+async def get_books_filter_by_date(date: int = Query(gt=1999, lt=2031)):
     return [
         book for book in books if
         book.published_date == date
@@ -119,7 +119,8 @@ async def update_book(book_id: int, payload: BookRequest):
     raise HTTPException(status_code=404, detail="Book not found")
 
 
-# path param
+# data validation
+
 
 @app.delete("/books/{book_id}")
 async def remove_book(book_id: int = Path(gt=0)):
