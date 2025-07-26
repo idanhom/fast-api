@@ -71,7 +71,7 @@ def assign_id(book_data: dict) -> dict:
 
 
 @app.get("/books")
-async def read_all_books():
+async def read_all_books() -> list[Book]:
     return books
 
 
@@ -114,15 +114,12 @@ async def create_book(book_request: BookRequest):
 
 
 @app.get("/books/{book_id}")
-async def read_book(book_id: int):
-    matching_books = [
-        book for book in books if book.id == book_id
-    ]
+async def read_book(book_id: int) -> Book:
+    for book in books:
+        if book.id == book_id:
+            return book
 
-    if not matching_books:
-        raise HTTPException(status_code=404, detail="books not found")
-
-    return matching_books
+    raise HTTPException(status_code=404, detail="books not found")
 
 
 @app.put("/books/{book_id}", response_model=Book)
