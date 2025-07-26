@@ -13,6 +13,7 @@ class BookRequest(BaseModel):
     author: str = Field(min_length=1)
     description: str = Field(min_length=1, max_length=100)
     rating: int = Field(ge=1, le=5)
+    published_date: int
 
     model_config = {
         "json_schema_extra": {
@@ -20,7 +21,8 @@ class BookRequest(BaseModel):
                 "title": "A new book",
                 "author": "A new author",
                 "description": "A new description",
-                "rating": 5
+                "rating": 5,
+                "published_date": "2015"
             }
         }
     }
@@ -34,13 +36,17 @@ class Book(BaseModel):
     author: str
     description: str
     rating: int
+    published_date: int
+
+
+
 
 # Fake stored book list (pretend these are from previous POSTs)
 books = [
-    Book(id=1, title="Computer Science Pro", author="Coding with Ruby",
-         description="A very nice book", rating=5),
-    Book(id=2, title="Be Fast with FastAPI", author="Coding with RGB",
-         description="A great book", rating=5),
+    Book(id=0, title="Computer Science Pro", author="Coding with Ruby",
+         description="A very nice book", rating=5, published_date=2016),
+    Book(id=1, title="Be Fast with FastAPI", author="Coding with RGB",
+         description="A great book", rating=5, published_date=2011),
 ]
 
 def assign_id(book_data: dict) -> dict:
@@ -73,6 +79,14 @@ async def read_book_by_rating(book_rating: int):
         book for book in books if
         book.rating == book_rating
     ]
+
+@app.get("/books/filter_by/{date}")
+async def get_books_filter_by_date(date: int):
+    return [
+        book for book in books if
+        book.published_date == date
+    ]
+
 
 @app.put("/books/{book_id}", response_model=Book)
 async def update_book(book_id: int, payload: BookRequest):
