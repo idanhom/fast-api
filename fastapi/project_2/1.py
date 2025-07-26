@@ -92,12 +92,6 @@ async def create_book(book_request: BookRequest):
 
     book_data = assign_id(book_data)
 
-    # # Assign id ourselves
-    # if books:
-    #     book_data["id"] = books[-1].id + 1
-    # else:
-    #     book_data["id"] = 1
-
     new_book = Book(**book_data)
     books.append(new_book)
     return new_book
