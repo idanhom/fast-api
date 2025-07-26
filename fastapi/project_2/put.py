@@ -37,19 +37,10 @@ books = [
          description="A great book", rating=5),
 ]
 
-def assign_id(book_data: dict) -> dict:
-    
-    next_id = books[-1].id + 1 if books else 1
-    book_data["id"] = next_id
+def add_id(book_data: dict) -> dict:
+    book_data["id"] = books[-1].id + 1 if books else 1
     return book_data
 
-@app.put("/books/{id}", response_model=Book)
-async def update_book(book_id: int, payload: BookRequest):
-    for idx, stored in enumerate(books):
-        if stored.id == book_id:
-            updated = Book(id=book_id, **payload.model_dump())
-            books[idx] = updated
-            return updated
-    raise HTTPException(status_code=404, detail="book not found")
 
+@app
         
