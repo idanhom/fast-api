@@ -43,13 +43,13 @@ class Book(BaseModel):
 
 # Fake stored book list (pretend these are from previous POSTs)
 books = [
-    Book(id=0, 
+    Book(id=1, 
          title="Computer Science Pro", 
          author="Coding with Ruby",
          description="A very nice book", 
          rating=5, 
          published_date=2016),
-    Book(id=1, 
+    Book(id=2, 
          title="Be Fast with FastAPI", 
          author="Coding with RGB",
          description="A great book",
@@ -58,13 +58,10 @@ books = [
 ]
 
 def assign_id(book_data: dict) -> dict:
-    # if books:
-    #     book_data["id"] = books[-1].id + 1
-    # else:
-    #     book_data["id"] = 1
-    # return book_data
-
-    book_data["id"] = books[-1].id + 1 if books else 1
+    if books:
+        book_data["id"] = books[-1].id + 1
+    else:
+        book_data["id"] = 1
     return book_data
 
 
