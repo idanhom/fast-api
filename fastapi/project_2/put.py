@@ -42,5 +42,10 @@ def add_id(book_data: dict) -> dict:
     return book_data
 
 
-@app
-        
+@app.put("/books/{id}", response_model=Book)
+async def update_book(book_id:int, payload: BookRequest):
+    for idx, content in enumerate(books):
+        if content.id == book_id:
+            updated = Book(id=book_id, **payload.model_dump())
+            books[idx] = updated
+            return updated
