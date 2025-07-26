@@ -1,7 +1,7 @@
 # https://redeploy.udemy.com/course/fastapi-the-complete-course/learn/lecture/29025634#overview
 
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -119,10 +119,10 @@ async def update_book(book_id: int, payload: BookRequest):
     raise HTTPException(status_code=404, detail="Book not found")
 
 
-
+# path param
 
 @app.delete("/books/{book_id}")
-async def remove_book(book_id):
+async def remove_book(book_id: int = Path(gt=0)):
     for idx, content in enumerate(books):
         if content.id == book_id:
             books.pop(idx)
