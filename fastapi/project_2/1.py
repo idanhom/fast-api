@@ -136,9 +136,10 @@ async def update_book(book_id: int, payload: BookRequest):
 
 
 @app.delete("/books/{book_id}")
-async def remove_book(book_id: int = Path(gt=0)):
+async def remove_book(book_id: int = Path(gt=0)) -> None:
     for idx, content in enumerate(books):
         if content.id == book_id:
             books.pop(idx)
             return
+    raise HTTPException(status_code=404, detail="book not found")
 
