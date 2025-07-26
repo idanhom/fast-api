@@ -85,7 +85,6 @@ async def update_book(book_id: int, payload: BookRequest):
 
 
 
-# ---------- Route ----------
 @app.post("/create-book", response_model=Book, status_code=201)
 async def create_book(book_request: BookRequest):
     book_data = book_request.model_dump(exclude_none=True)
@@ -96,3 +95,9 @@ async def create_book(book_request: BookRequest):
     books.append(new_book)
     return new_book
 
+@app.delete("/books/{book_id}")
+async def remove_book(book_id):
+    for idx, content in enumerate(books):
+        if content.id == book_id:
+            books.pop(idx)
+            return
